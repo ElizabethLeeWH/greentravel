@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+    min-width: 100%;
+    overflow: auto;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF6E9;
+}
+
+.nav-button {
+    color: #654A51;
+}
+
+img {
+    height: 40px;
+    width: auto;
+}
+
+.main {
+    padding-top: 10px;
+    background-color: #FFF6E9;
+    padding-bottom: 100px;
+    min-height: calc(100vh - 100px);
+}
+
+.header {
+    text-align: center;
+    padding: 50px 20px;
+    background: #FFF6E9;
+}
+
+.header h1 {
+    color: #654A51;
+    font-size: 3em;
+}
+
+.create-trip-form {
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #654A51;
+    margin-bottom: 30px;
+    background: #FFF6E9;
+    box-sizing: border-box;
+    height: 500px;
+    width: 800px;
+}
+
+.email-form-field {
+    width: 90%;
+    padding-left: 5%;
+    margin-bottom: 2px;
+}
+
+.email-button {
+    width: 50%;
+    padding-left: 5%;
+}
+
+.inviting-container {
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+input.matInput {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    /* accounts for padding */
+}
+
+button {
+    background-color: #FFF6E9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+button[type="button"] {
+    background-color: #FFF6E9;
+}
+
+button[type="button"]:hover {
+    background-color: #FFFFFF;
+}
+
+@media (min-width: 768px) {
+
+    .nav-container {
+        padding: 20px 90px;
+    }
+
+    .create-trip-form {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20px 50px;
+    }
+
+}

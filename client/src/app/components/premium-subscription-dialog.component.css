@@ -1,0 +1,13 @@
+.success-snackbar {
+    color: #fff;
+    background-color: #4CAF50;
+  }
+  
+  .error-snackbar {
+    color: #fff;
+    background-color: #f44336;
+  }
+
+  .error {
+    color: red;
+  }

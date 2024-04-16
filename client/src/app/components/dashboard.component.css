@@ -1,0 +1,80 @@
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF6E9;
+}
+
+.nav-button {
+    color: #654A51;
+}
+
+img {
+    height: 40px;
+    width: auto;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+.trip-overview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    background-color: #FFF6E9;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav .site-title {
+    font-family: 'Serif', cursive;
+    color: #b4876e;
+    font-size: 2.5rem;
+}
+
+.sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.trips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+.trip-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trip-card img {
+    width: 30%;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.trip-info {
+    text-align: center;
+    margin-top: 0.5rem;
+}

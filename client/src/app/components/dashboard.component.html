@@ -1,0 +1,32 @@
+<nav>
+    <div class="nav-container">
+        <a mat-button routerLink="/"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+        <div class="nav-buttons">
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button (click)="logout()">LOGOUT</button>
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button
+                (click)="openPremiumSubscriptionDialog()">PREMIUM</button>
+            <!-- <button *ngIf="(isLoggedIn$ | async) === true" mat-button (click)="settings()">SETTINGS</button> -->
+        </div>
+    </div>
+</nav>
+<div class="trip-overview-container">
+    <section class="sub-header">
+        <span>Your trips:</span>
+        <button mat-raised-button color="primary" routerLink="/plan/create">+ new trip</button>
+    </section>
+
+    <div class="trips-grid">
+        <h3 *ngIf="userTripHeaders.length==0">No trips created yet!</h3>
+        <div *ngFor="let tripHeader of userTripHeaders" class="trip-card">
+            <!-- <img [src]="trip.image|| 'assets/default-trip.jpg'" alt="Trip to {{ trip.destination }}"> -->
+            <img [src]="'assets/cover.jpg'" alt="{{ tripHeader.tripName }}">
+            <div class="trip-info">
+                <h3>{{ tripHeader.tripName }}</h3>
+                <a mat-button [routerLink]="['/plan', tripHeader.tripId]">Continue --></a>
+                <button mat-icon-button (click)="removeTripHeader(tripHeader.tripId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<nav class="top-nav">
+    <div class="nav-container">
+        <a mat-button routerLink="/"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+        <div class="nav-buttons">
+            <button *ngIf="(isLoggedIn$ | async) === false" mat-button (click)="openLoginDialog()">LOGIN</button>
+            <button *ngIf="(isLoggedIn$ | async) === false" mat-button (click)="openSignupDialog()">SIGN UP</button>
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button [routerLink]="['/dashboard']">DASHBOARD</button>
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button (click)="logout()">LOGOUT</button>
+        </div>
+    </div>
+</nav>
+
+<main class="main">
+    <section class="header">
+        <h1>Plan a new trip</h1>
+    </section>
+
+    <div class="create-trip-form">
+        <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+
+            <div formGroupName="destination">
+                <mat-form-field appearance="fill">
+                    <mat-label>Destination</mat-label>
+                    <input matInput type="text" placeholder="Enter a location" formControlName="country"
+                        #autocompleteInput>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStart></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEnd></mat-datepicker>
+            </mat-form-field>
+
+            <button class="invite-trip-mates" mat-button [matMenuTriggerFor]="inviteMenu" type="button">Invite Trip
+                Mates</button>
+            <mat-menu #inviteMenu="matMenu">
+                <form>
+                    <mat-form-field class="email-form-field">
+                        <input matInput placeholder="Enter email" [formControl]="email"
+                            (click)="$event.stopPropagation()">
+                    </mat-form-field>
+                    <mat-error *ngIf="email.hasError('email')">
+                        Enter a valid email address
+                    </mat-error>
+                    <div class="email-button" (click)="inviteTripMates()" role="button" tabindex="0"
+                        style="cursor: pointer;">Invite</div>
+                </form>
+            </mat-menu>
+            <button mat-raised-button color="primary" type="submit">Start Trip</button>
+
+        </form>
+    </div>
+
+    <div class="inviting-container">
+        <h3>Inviting:</h3>
+        <ul *ngIf="invitedEmails.length > 0">
+            <li *ngFor="let email of invitedEmails">{{ email }}</li>
+        </ul>
+        <ul *ngIf="invitedEmails.length == 0">
+            <p>No tripmates invited</p>
+        </ul>
+    </div>
+
+</main>

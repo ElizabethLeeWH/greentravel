@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Edit Expense</h2>
+<div mat-dialog-content [formGroup]="editForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Currency</mat-label>
+      <select matNativeControl formControlName="currency">
+        <option *ngFor="let currency of currencies" [value]="currency.code">
+          {{ currency.code }}
+        </option>
+      </select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <select matNativeControl formControlName="category">
+        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      </select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Paid By</mat-label>
+      <input matInput formControlName="paidBy">
+    </mat-form-field>
+  
+    <!-- Split With Management -->
+    <div formArrayName="splitWith">
+      <div *ngFor="let split of getSplitWithControls(); let i = index">
+        <mat-form-field appearance="fill">
+          <mat-label>Split With #{{ i + 1 }}</mat-label>
+          <input matInput [formControlName]="i">
+          <button mat-icon-button matSuffix (click)="removeSplitWithControl(i)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Add new split with" formControlName="newSplitWith" (keydown.enter)="$event.preventDefault(); addSplitWith()">
+      <button mat-button matSuffix (click)="addSplitWith()">Add</button>
+    </mat-form-field>
+  
+    <div mat-dialog-actions>
+      <button mat-button (click)="cancel()">Cancel</button>
+      <button mat-button color="primary" (click)="save()">Save</button>
+    </div>
+  </div>
+  

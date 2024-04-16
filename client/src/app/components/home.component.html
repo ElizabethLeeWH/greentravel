@@ -1,0 +1,31 @@
+<nav class="top-nav">
+    <div class="nav-container">
+        <a mat-button routerLink="/"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+        <div class="nav-buttons">
+            <button *ngIf="(isLoggedIn$ | async) === false" mat-button (click)="openLoginDialog()">LOGIN</button>
+            <button *ngIf="(isLoggedIn$ | async) === false" mat-button (click)="openSignupDialog()">SIGN UP</button>
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button [routerLink]="['/dashboard']">DASHBOARD</button>
+            <button *ngIf="(isLoggedIn$ | async) === true" mat-button (click)="logout()">LOGOUT</button>
+        </div>
+    </div>
+</nav>
+
+<main class="main">
+    <div class="main-section">
+        <h2 class="main-title">TRAVEL PLANNING</h2>
+        <h2 class="main-title">MADE EASY</h2>
+        <p class="main-subtitle">you'll never travel without us again</p>
+        <button class="main-button" routerLink="/plan/create">START PLANNING</button>
+    </div>
+
+    <div class="newsletter-section">
+        <div class="newsletter-box">
+            <h2 class="newsletter-title">Newsletter Sign Up</h2>
+            <p class="newsletter-subtext">Want to keep up with all our latest news, information, and insider tips?</p>
+            <form class="newsletter-form" [formGroup]="newsletter" (ngSubmit)="onSubmit()">
+                <input type="email" class="newsletter-input" placeholder="Email" formControlName="email">
+                <button class="newsletter-button" type="submit" [disabled]="newsletter.invalid">SUBSCRIBE!</button>
+            </form>
+        </div>
+    </div>
+</main>

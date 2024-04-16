@@ -1,0 +1,239 @@
+<div class="page-container">
+  <nav class="navbar">
+    <a mat-button routerLink="/"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+    <button mat-button *ngIf="!(isLoggedIn$ | async)" (click)="openSignupDialog()">SIGN UP TO SAVE</button>
+    <button *ngIf="(isLoggedIn$ | async) === true" mat-button (click)="saveAll()">SAVE</button>
+    <button *ngIf="(isLoggedIn$ | async) === true" mat-button [routerLink]="['/dashboard']">DASHBOARD</button>
+  </nav>
+
+  <div class="trip-planner-container">
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" mode="side" opened="true">
+        <div class="sidenav-content">
+
+          <mat-nav-list>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Overview</mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-action-list>
+                <a mat-list-item [routerLink]="[]" fragment="tripList">Trips</a>
+                <a mat-list-item [routerLink]="[]" fragment="itinerary">Itinerary</a>
+                <a mat-list-item [routerLink]="[]" fragment="budget">Budget</a>
+              </mat-action-list>
+            </mat-expansion-panel>
+          </mat-nav-list>
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+
+        <div class="trip-header">
+          <form [formGroup]="tripHeaderForm" (ngSubmit)="onSubmit()" class="trip-form">
+            <section>
+              <div class="trip-header-photo">
+                <img src="assets/cover.jpg" alt="Trip Header Photo">
+                <div class="overlay-text"> <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Enter a trip name</mat-label>
+                    <input matInput formControlName="tripName" #placesToVisitInput id="dynamicInput">
+                  </mat-form-field></div>
+                <button class="overlay-icon" mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>Upload Image</button>
+                  <button mat-menu-item>Search Web Images</button>
+                </mat-menu>
+              </div>
+            </section>
+
+            <div class="date-range">
+              <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStart></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="half-width">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEnd></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+
+        <div class="trip-list">
+          <h2>Trips</h2>
+          <form [formGroup]="tripListForm">
+            <div formArrayName="tripList" id="tripList">
+              <mat-accordion multi="true">
+                <mat-expansion-panel *ngFor="let trip of getTripList().controls; let i = index" [formGroupName]="i">
+                  <mat-expansion-panel-header class="custom-expansion-panel-header">
+                    <mat-panel-title>
+                      <mat-form-field appearance="outline" class="custom-input-size">
+                        <input formControlName="header" placeholder="Add a title (e.g., 'places of interest')" matInput
+                          (keydown.space)="$event.stopPropagation()">
+                      </mat-form-field>
+                      <button mat-icon-button (click)="removeTrip(i)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div formArrayName="items">
+                    <div *ngFor="let item of getItems(i).controls; let j = index" [formGroupName]="j">
+                      <ng-container *ngIf="item.get('type')?.value === 'place'">
+                        <div formGroupName="content">
+                          <mat-form-field>
+                            <mat-label>Place</mat-label>
+                            <input matInput formControlName="nameOfPlace">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <input matInput formControlName="description">
+                          </mat-form-field>
+                        </div>
+                        <button mat-icon-button (click)="removeItem(i, j)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </ng-container>
+                      <ng-container *ngIf="item.get('type')?.value === 'note'">
+                        <div formGroupName="content">
+                          <mat-form-field>
+                            <mat-label>Notes</mat-label>
+                            <textarea matInput formControlName="text"></textarea>
+                          </mat-form-field>
+                        </div>
+                        <button mat-icon-button (click)="removeItem(i, j)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <button mat-button type="button" (click)="addPlace(i)">Add a place</button>
+                  <button mat-button type="button" (click)="addNote(i)">Add Note</button>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+            <button mat-button type="button" (click)="addTrip()">+ New Trip</button>
+          </form>
+        </div>
+
+        <div class="itinerary" id="itinerary">
+          <h2>Itineraries</h2>
+          <form [formGroup]="itineraryForm">
+            <div formArrayName="dates">
+              <div *ngFor="let dateGroup of itineraryFormDatesControls(); let i = index" [formGroupName]="i">
+                <mat-form-field appearance="fill" class="half-width">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="pickerItinerary" formControlName="date">
+                  <mat-datepicker-toggle matSuffix [for]="pickerItinerary"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerItinerary></mat-datepicker>
+                </mat-form-field>
+                <div formArrayName="places">
+                  <div *ngFor="let placeGroup of getItineraryPlaces(i).controls; let j = index" [formGroupName]="j">
+                    <mat-form-field>
+                      <input matInput placeholder="Place Name" formControlName="country" #autocompleteInput
+                        (focus)="initAutocomplete(i, j, autocompleteInput)">
+                    </mat-form-field>
+                    <button mat-button (click)="removePlace(i, j)">Remove Place</button>
+                  </div>
+                  <button mat-button (click)="addItineraryPlace(i)">Add Place</button>
+                </div>
+                <button mat-button (click)="removeDate(i)">Remove Date</button>
+              </div>
+              <button mat-button (click)="addDate()">Add Date</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="budget">
+          <h2>Budget</h2>
+          <form [formGroup]="budgetForm">
+            <mat-form-field>
+              <mat-label>Currency</mat-label>
+              <mat-select formControlName="currency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency.code">{{ currency.code }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Total Budget</mat-label>
+              <input matInput formControlName="totalBudget" type="number">
+            </mat-form-field>
+          </form>
+
+          <form [formGroup]="expensesForm">
+            <mat-form-field appearance="fill">
+              <mat-label>Currency</mat-label>
+              <mat-select formControlName="currency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency.code">{{ currency.code }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Amount</mat-label>
+              <input matInput formControlName="amount" placeholder="Amount" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Paid by</mat-label>
+              <input matInput formControlName="paidBy" placeholder="Paid by">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Split with</mat-label>
+              <input matInput formControlName="newSplitWith" placeholder="Split with"
+                     (keydown.enter)="$event.preventDefault(); addSplitWith()">
+            </mat-form-field>
+            <button mat-button type="button" (click)="addSplitWith()">Add split with</button>
+
+            <div formArrayName="splitWith">
+              <div *ngFor="let splitCtrl of getSplitWithControls(); let i = index">
+                <span>{{ splitCtrl.value }}</span>
+                <button type="button" (click)="removeSplitWithControl(i)">Remove</button>
+              </div>
+            </div>
+            <button mat-raised-button color="primary" type="button" (click)="addExpense()">Add Expense</button>
+          </form>
+        </div>
+
+        <div *ngIf="expensesControls.length > 0">
+          <h3>Expenses</h3>
+          <div [formGroup]="budgetForm">
+            <div formArrayName="expenses">
+              <ul>
+                <li *ngFor="let expense of expensesControls; let i = index" [formGroupName]="i">
+                  Currency: {{ expense.get('currency')?.value }},
+                  Amount: {{ expense.get('amount')?.value }},
+                  Category: {{ expense.get('category')?.value }},
+                  Date: {{ expense.get('date')?.value | date }},
+                  Paid by: {{ expense.get('paidBy')?.value }},
+                  Split with:
+                  <ul formArrayName="splitWith">
+                    <li *ngFor="let splitEntry of getSplitWithControlByIndex(i).controls; let j = index">
+                      {{ splitEntry.value }}
+                    </li>
+                  </ul>
+                  <button type="button" (click)="editExpense(expense, i)">Edit</button>
+                  <button type="button" (click)="removeExpense(i)">Delete</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <div #map class="map-section"></div>
+  </div>
+</div>

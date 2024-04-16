@@ -1,0 +1,129 @@
+.navbar {
+  background-color: #deadd0;
+  color: white;
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trip-planner-container {
+  display: flex;
+  height: calc(100vh - 50px); 
+  overflow: hidden; 
+}
+
+.sidenav-container {
+  flex-grow: 1;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.trip-header-photo {
+  width: 100%;
+  height: 150px;
+  position: relative;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 80%;
+  left: 2%;
+  transform: translate(0%, -40%);
+  color: black;
+}
+
+.overlay-icon {
+  position: absolute;
+  top: 20%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  color: white; 
+  background-color: rgba(0, 0, 0, 0.5);
+ 
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo {
+  max-height: 30px;
+  padding: 0.5rem;
+}
+
+.trip-planning-content {
+  padding: 0rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.trip-form .form-title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: calc(50% - 0.5rem);
+}
+
+.date-range {
+  display: flex;
+  width: 95%;
+  margin: auto;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.itineraries-section {
+  margin-top: 2rem;
+}
+
+.sidenav-container, .map-section {
+  flex-grow: 1;
+}
+
+.map-section {
+  height: 100%; 
+  width: 1000px;
+  background-color: #f0f0f0; 
+}
+
+.submit-plan-button {
+  display: block;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 16px 16px;
+}
+
+.mat-form-field {
+  box-sizing: border-box;
+}
+
+.custom-expansion-panel-header {
+  padding: 20px;
+}
+
+.custom-input-size {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .mat-form-field {
+    width: 100%;
+  }
+}

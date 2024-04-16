@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Sign up</h2>
+<mat-dialog-content>
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Enter your email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Enter your password" formControlName="password">
+    </mat-form-field>
+    <mat-checkbox formControlName="newsletterStatus">
+      Subscribe to newsletter
+    </mat-checkbox>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Sign up</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button *ngIf="showLoginOption" mat-button (click)="openLoginDialog()">Have an account with us? Login</button>
+  <button *ngIf="showSkipOption" mat-button (click)="skipSignUp()">Skip and Sign Up Later</button>
+</mat-dialog-actions>

@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  min-width: 100%;
+  overflow: auto;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFF6E9;
+}
+
+.nav-button {
+  color: #654A51;
+}
+
+img {
+  height: 40px;
+  width: auto;
+}
+
+.main {
+  text-align: center;
+  padding-top: 10px;
+  background-color: #FFF6E9;
+}
+
+.main-section {
+  background-image: url('/assets/cover.png');
+  background-size: cover;
+  background-position: center;
+  padding: 300px 0px;
+}
+
+.main-title {
+  font-size: 3.5em;
+  font-weight: 500;
+  color: #654A51;
+  margin-bottom: 0.5em;
+}
+
+.main-subtitle {
+  font-size: 1.5em;
+  font-style: italic;
+  color: #654A51;
+  margin-bottom: 1em;
+}
+
+.main-button {
+  font-size: 1.25em;
+  color: #654A51;
+  background-color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.main-button:hover {
+  background-color: #FFF6E9;
+}
+
+.newsletter-section {
+  background-color: #FFF6E9;
+  padding: 50px 20px;
+}
+
+.newsletter-box {
+  border: 1em;
+}
+
+.newsletter-title {
+  font-size: 2em;
+  color: #654A51;
+  margin-bottom: 0.5em;
+}
+
+.newsletter-subtext {
+  font-size: 1.25em;
+  color: #654A51;
+  margin-bottom: 1em;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.newsletter-input {
+  font-size: 1em;
+  padding: 10px;
+  margin-bottom: 1em;
+  width: 50%;
+  border: 1px solid #654A51;
+  border-radius: 5px;
+}
+
+.newsletter-button {
+  font-size: 1em;
+  color: #FFFFFF;
+  background-color: #DAA520;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.success-snackbar {
+  color: #fff;
+  background-color: #4CAF50;
+}
+
+.error-snackbar {
+  color: #fff;
+  background-color: #f44336;
+}
+
+.newsletter-button:hover {
+  background-color: #F0E68C;
+}
+
+@media (min-width: 768px) {
+  .nav-container {
+    padding: 20px 90px;
+  }
+
+  .main-section {
+    padding: 275px 0px;
+    overflow: auto;
+  }
+
+  .newsletter-input {
+    width: 300px;
+  }
+}

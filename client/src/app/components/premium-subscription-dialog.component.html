@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Subscribe to Premium</h2>
+<mat-dialog-content>
+  <p>Unlock real-time weather updates and exclusive travel insights for only $9.99/month.</p>
+  <div #cardInfo></div>
+  <p *ngIf="error" class="error">{{ error }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Later</button>
+  <button mat-button color="primary" (click)="subscribeToPremium()">Subscribe</button>
+</mat-dialog-actions>

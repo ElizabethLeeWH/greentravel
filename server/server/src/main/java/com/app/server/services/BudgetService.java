@@ -16,8 +16,10 @@ public class BudgetService {
     public void saveBudget(Budget budget) {
         Optional<Budget> existingBudget = budgetRepo.getBudgetByTripId(budget.getTripId());
         if (existingBudget.isPresent()) {
-            // Handle logic if budget already exists, e.g., update
-            // budgetRepo.updateBudget(budget);
+            Budget updatedBudget = existingBudget.get();
+            updatedBudget.setCurrency(budget.getCurrency());
+            updatedBudget.setTotalBudget(budget.getTotalBudget());
+            budgetRepo.updateBudget(updatedBudget);
         } else {
             budgetRepo.saveBudget(budget);
         }

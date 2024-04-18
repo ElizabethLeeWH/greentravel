@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,8 +36,8 @@ public class ApiController {
     @Autowired
     private ItineraryService itineraryService;
 
-    @Autowired
-    private BudgetService budgetService;
+    // @Autowired
+    // private BudgetService budgetService;
 
     @Autowired
     private TripHeaderService tripHeaderService;
@@ -190,7 +189,7 @@ public class ApiController {
     public ResponseEntity<?> saveBudget(@RequestBody Budget budget, @PathVariable String tripId) {
         try {
             budget.setTripId(tripId);
-            budgetService.saveBudget(budget);
+            // budgetService.saveBudget(budget);
             return ResponseEntity.ok().body("Budget saved successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to save budget: " + e.getMessage());

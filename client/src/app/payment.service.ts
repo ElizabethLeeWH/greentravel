@@ -9,7 +9,7 @@ import { PaymentInfo } from './model';
 })
 export class PaymentService {
 
-    private baseUrl = environment.apiUrl;
+    private baseUrl = "https://thetravelcompanion.up.railway.app/api";
 
     constructor(private http: HttpClient) {}
 

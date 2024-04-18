@@ -45,7 +45,7 @@ public class PaymentService {
                     .setPriceData(
                         SessionCreateParams.LineItem.PriceData.builder()
                             .setCurrency("sgd")
-                            .setUnitAmount(500L)
+                            .setUnitAmount(999L)
                             .setProductData(
                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                     .setName("Total")

@@ -25,6 +25,11 @@ public class BudgetRepo {
             WHERE trip_id = ?
                 """;
 
+    final String SQL_UPDATE_BUDGET = """
+                UPDATE budgets SET currency = ?, total_budget = ?
+                WHERE trip_id = ?
+            """;
+
     public void saveBudget(Budget budget) {
         jdbcTemplate.update(SQL_SAVE_BUDGET, budget.getBudgetId(), budget.getTripId(), budget.getCurrency(),
                 budget.getTotalBudget());
@@ -42,5 +47,9 @@ public class BudgetRepo {
         String sql = "SELECT * FROM budgets WHERE trip_id = ?";
         List<Budget> budgets = jdbcTemplate.query(sql, rowMapper, tripId);
         return budgets.stream().findFirst();
+    }
+
+    public void updateBudget(Budget budget) {
+        jdbcTemplate.update(SQL_UPDATE_BUDGET, budget.getCurrency(), budget.getTotalBudget(), budget.getTripId());
     }
 }
